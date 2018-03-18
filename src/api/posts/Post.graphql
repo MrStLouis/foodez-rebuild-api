@@ -1,0 +1,16 @@
+# a type of post made by a user
+type Post {
+  id: Int!
+  # post text
+  name: String!
+  # total post views
+  views: Int
+}
+
+extend type Query {
+  posts: [Post]
+}
+
+extend type Mutation {
+  makePost(name: String!): Post
+}

@@ -1,0 +1,8 @@
+export default {
+  SQL_HOST: 'localhost',
+  SQL_PORT: '',
+  SQL_DATABSE: '',
+  SQL_USERNAME: '',
+  SQL_PASSWORD: '',
+  SQL_DIALECT: 'mysql',
+}

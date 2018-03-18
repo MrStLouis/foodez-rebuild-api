@@ -1,0 +1,23 @@
+# a FoodEZ user
+type User {
+  # uuid
+  id: String!
+  # unique username
+  username: String!
+  # associated email
+  email: String!
+  # hashed pword REMOVE LATER
+  passwordHash: String,
+  # hashing salt REMOVE LATER
+  passwordSalt: String,
+  # posts unique to user
+  posts: [Post]
+}
+
+type Query {
+  getUser(id: Int!): User!
+}
+
+type Mutation {
+  createUser(username: String!, email: String! password:String!): User!
+}
