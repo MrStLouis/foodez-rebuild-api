@@ -17,6 +17,7 @@ module.exports = {
     'no-console': 'off',
     'function-paren-newline': 'off',
     'react/prop-types': 'off',
+    'no-param-reassign': 'off',
     // adds auto-fix stuff as warn
     'comma-dangle': 'warn',
     'semi': 'warn',

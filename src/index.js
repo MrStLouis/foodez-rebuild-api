@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
+import cors from 'cors';
 // graphql connectors
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { createContext } from 'dataloader-sequelize';
@@ -20,13 +20,19 @@ const {
   SESSION_KEY,
 } = process.env;
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200,
+  credentials: true,
+};
+
 // init express
 const app = express();
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false,
 }));
-app.use(cookieParser());
 
 // init sessions
 const Store = store(session.Store);
@@ -36,6 +42,11 @@ app.use(session({
     checkExpirationInterval: 15 * 60 * 1000,
     expiration: 24 * 60 * 60 * 1000,
   }),
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000,
+    secure: 'auto',
+  },
+  proxy: true,
   secret: SESSION_KEY,
   resave: false,
   saveUninitialized: false,
@@ -53,6 +64,10 @@ passport.use(db.Users.createStrategy());
 passport.serializeUser(db.Users.serializeUser());
 passport.deserializeUser(db.Users.deserializeUser());
 
+app.use((req, res, next) => {
+  // console.log(req.session);
+  next();
+});
 // handle auth
 app.post('/login',
   passport.authenticate('local'),

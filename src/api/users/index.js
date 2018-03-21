@@ -22,7 +22,9 @@ export default (Sequelize, DataTypes) => {
   });
 
   Users.associate = (models) => {
-    models.Users.hasMany(models.Posts);
+    Users.Posts = models.Users.hasMany(models.Posts, {
+      foreignKey: 'ownerId',
+    });
   };
   return Users;
 };

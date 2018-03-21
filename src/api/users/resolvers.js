@@ -3,8 +3,13 @@ import { promisify } from 'util';
 
 export default {
   Query: {
-    getUser(parent, args, { user }) {
-      return user || {};
+    me(parent, args, context) {
+      const { user } = context;
+      return user;
+    },
+    user(parent, args, context, info) {
+      const { user, db } = context;
+      return resolver(db.Users)(parent, args, context, info);
     },
   },
   Mutation: {
